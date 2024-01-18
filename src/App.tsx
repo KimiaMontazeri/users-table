@@ -1,9 +1,9 @@
 import UsersTable from "./components/UsersTable";
+import { getURLSearchParam } from "./utils/SearchParams";
 import "./App.css";
 
 function App() {
-  const params = new URLSearchParams(window.location.search);
-  const page = Number(params.get("page"));
+  const page = Number(getURLSearchParam("page"));
   return <UsersTable page={page} />;
 }
 
