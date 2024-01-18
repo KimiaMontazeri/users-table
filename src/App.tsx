@@ -1,11 +1,8 @@
+import UsersTable from "./components/UsersTable";
 import "./App.css";
 
 function App() {
-  return (
-    <div>
-      <p>hello world</p>
-    </div>
-  );
+  return <UsersTable />;
 }
 
 export default App;
