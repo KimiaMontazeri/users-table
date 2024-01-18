@@ -1,12 +1,19 @@
 import { useEffect, useState } from "react";
 import records from "../../records.json";
+import { setURLSearchParam } from "../../utils/SearchParams";
+import { ORDER_URL_SEARCH_PARAM } from "../../constants/constants";
 import Pagination from "../Pagination";
 import User from "./User/User";
 import SortSelect from "../SortSelect";
-import type { SelectValue } from "../SortSelect";
+import type { Order } from "../SortSelect";
 
 /* Types */
 export type UserDataProps = (typeof records)[number];
+
+type UsersTableProps = {
+  page?: number;
+  order?: Order;
+};
 
 /* Constants */
 const KEYS = Object.keys(records[0]);
@@ -14,13 +21,14 @@ const LENGTH = records.length;
 const FIRST_PAGE = 1;
 const PAGE_SIZE = 10;
 
-export default function UsersTable({ page }: { page?: number }) {
-  const isPageValid = page && page > 0 && page < LENGTH / PAGE_SIZE;
+export default function UsersTable({ page, order }: UsersTableProps) {
+  const isValidPage = page && page > 0 && page < LENGTH / PAGE_SIZE;
   const [currentPage, setCurrentPage] = useState(
-    isPageValid ? page : FIRST_PAGE
+    isValidPage ? page : FIRST_PAGE
   ); // 1-indexed
   const [data, setData] = useState(records);
   const [currentUsersData, setCurrentUsersData] = useState<UserDataProps[]>();
+  const [sortOrder, setSortOrder] = useState<Order | undefined>(order);
 
   const calculateCurrentUsersData = () => {
     const start = (currentPage - 1) * PAGE_SIZE;
@@ -28,18 +36,25 @@ export default function UsersTable({ page }: { page?: number }) {
     setCurrentUsersData(data.slice(start, end));
   };
 
-  const handleSelectSortingCriteria = (selectedValue: SelectValue) => {
+  const saveSortingOrderToURL = (order: Order) => {
+    setURLSearchParam(ORDER_URL_SEARCH_PARAM, order);
+  };
+
+  const handleSelectSortingOrder = (order: Order) => {
     const sorted = data.sort((a, b) => {
       const date1 = Date.parse(a.date);
       const date2 = Date.parse(b.date);
-      if (selectedValue === "desc") {
+      if (order === "desc") {
         return date1 > date2 ? -1 : 1;
       }
       return date1 < date2 ? -1 : 1;
     });
-    console.log({ sorted });
+
     setData(sorted);
     calculateCurrentUsersData();
+
+    setSortOrder(order);
+    saveSortingOrderToURL(order);
   };
 
   useEffect(() => {
@@ -58,7 +73,10 @@ export default function UsersTable({ page }: { page?: number }) {
                 return (
                   <th key={index}>
                     <span>{key.toUpperCase()}</span>
-                    <SortSelect handleChange={handleSelectSortingCriteria} />
+                    <SortSelect
+                      handleChange={handleSelectSortingOrder}
+                      selectedOption={sortOrder}
+                    />
                   </th>
                 );
               }

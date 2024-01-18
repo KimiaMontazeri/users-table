@@ -1,10 +1,10 @@
 import { ChangeEvent } from "react";
 
-export type SelectValue = "asc" | "desc";
+export type Order = "asc" | "desc";
 
 type SortSelectProps = {
-  handleChange: (selectedValue: SelectValue) => void;
-  selectedOption?: SelectValue;
+  handleChange: (selectedValue: Order) => void;
+  selectedOption?: Order;
 };
 
 export default function SortSelect({
@@ -13,7 +13,7 @@ export default function SortSelect({
 }: SortSelectProps) {
   const onChange = (event: ChangeEvent<HTMLSelectElement>) => {
     event.preventDefault();
-    handleChange(event.target.value as SelectValue);
+    handleChange(event.target.value as Order);
   };
 
   return (

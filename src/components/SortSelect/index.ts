@@ -1,2 +1,2 @@
 export { default } from "./SortSelect";
-export type { SelectValue } from "./SortSelect";
+export type { Order } from "./SortSelect";
