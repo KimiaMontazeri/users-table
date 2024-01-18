@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import records from "../../records.json";
-import Pagination from "../Pagination/Pagination";
+import Pagination from "../Pagination";
 import User from "./User/User";
+import SortSelect from "../SortSelect";
+import type { SelectValue } from "../SortSelect";
 
 /* Types */
 export type UserDataProps = (typeof records)[number];
@@ -17,23 +19,51 @@ export default function UsersTable({ page }: { page?: number }) {
   const [currentPage, setCurrentPage] = useState(
     isPageValid ? page : FIRST_PAGE
   ); // 1-indexed
+  const [data, setData] = useState(records);
   const [currentUsersData, setCurrentUsersData] = useState<UserDataProps[]>();
 
-  useEffect(() => {
+  const calculateCurrentUsersData = () => {
     const start = (currentPage - 1) * PAGE_SIZE;
     const end = start + PAGE_SIZE;
-    setCurrentUsersData(records.slice(start, end));
+    setCurrentUsersData(data.slice(start, end));
+  };
+
+  const handleSelectSortingCriteria = (selectedValue: SelectValue) => {
+    const sorted = data.sort((a, b) => {
+      const date1 = Date.parse(a.date);
+      const date2 = Date.parse(b.date);
+      if (selectedValue === "desc") {
+        return date1 > date2 ? -1 : 1;
+      }
+      return date1 < date2 ? -1 : 1;
+    });
+    console.log({ sorted });
+    setData(sorted);
+    calculateCurrentUsersData();
+  };
+
+  useEffect(() => {
+    calculateCurrentUsersData();
   }, [currentPage]);
 
   return (
     <>
       <table>
         <thead>
+          {/* TABLE HEAD (can be extracted into a dummy component) */}
           <tr className="header-row">
-            <th>INDEX</th>
-            {KEYS.map((key, index) => (
-              <th key={index}>{key.toUpperCase()}</th>
-            ))}
+            <th>INDEX</th> {/* Manually adding this column */}
+            {KEYS.map((key, index) => {
+              if (key === "date") {
+                return (
+                  <th key={index}>
+                    <span>{key.toUpperCase()}</span>
+                    <SortSelect handleChange={handleSelectSortingCriteria} />
+                  </th>
+                );
+              }
+              return <th key={index}>{key.toUpperCase()}</th>;
+            })}
           </tr>
         </thead>
         <tbody>
