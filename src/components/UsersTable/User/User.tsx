@@ -11,7 +11,7 @@ export default function User({
   index: number;
 }) {
   return (
-    <tr style={{ border: "3px solid white" }}>
+    <tr className="row">
       <td>{index}</td>
       <td>{id}</td>
       <td>{name}</td>

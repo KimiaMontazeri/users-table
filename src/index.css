@@ -15,12 +15,33 @@ body {
   min-height: 100vh;
 }
 
-.pagination-container {
+table {
+  table-layout: auto;
+  width: 100%;
+  border-collapse: separate;
+  border-radius: 2px 2px 0px 0px;
+  border-spacing: 0px;
+}
+
+.header-row {
+  background-color: #e9e4e426;
+}
+
+.header-row th {
   padding: 10px;
 }
 
+.row td {
+  padding: 10px;
+  border-top: 2px solid rgb(179, 177, 177);
+}
+
+.pagination-container {
+  margin-top: 20px;
+}
+
 .pagination-block {
-  border: 1px solid rgba(255, 255, 255, 0.647);;
+  border: 1px solid rgba(255, 255, 255, 0.647);
   border-radius: 3px;
   padding: 4px;
   margin: 4px;

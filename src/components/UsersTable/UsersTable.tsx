@@ -26,8 +26,8 @@ export default function UsersTable() {
     <>
       <table>
         <thead>
-          <tr>
-            <th>index</th>
+          <tr className="header-row">
+            <th>INDEX</th>
             {KEYS.map((key, index) => (
               <th key={index}>{key.toUpperCase()}</th>
             ))}
