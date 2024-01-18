@@ -12,8 +12,11 @@ const LENGTH = records.length;
 const FIRST_PAGE = 1;
 const PAGE_SIZE = 10;
 
-export default function UsersTable() {
-  const [currentPage, setCurrentPage] = useState(FIRST_PAGE); // 1-indexed
+export default function UsersTable({ page }: { page?: number }) {
+  const isPageValid = page && page > 0 && page < LENGTH / PAGE_SIZE;
+  const [currentPage, setCurrentPage] = useState(
+    isPageValid ? page : FIRST_PAGE
+  ); // 1-indexed
   const [currentUsersData, setCurrentUsersData] = useState<UserDataProps[]>();
 
   useEffect(() => {
