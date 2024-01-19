@@ -51,6 +51,14 @@ export default function UsersTable({
     setURLSearchParam(ORDER_URL_SEARCH_PARAM, order);
   };
 
+  const saveFiltersToURL = (filters: Filters) => {
+    filters.forEach(({ key, value }) => {
+      if (value) {
+        setURLSearchParam(key, value);
+      }
+    });
+  };
+
   const handleSelectSortingOrder = (order: Order) => {
     const sorted = data.sort((a, b) => {
       const date1 = Date.parse(a.date);
@@ -103,7 +111,7 @@ export default function UsersTable({
     setCurrentUsersData(filtered.slice(start, end));
     setData(filtered);
 
-    // TODO: save in url
+    saveFiltersToURL(filters);
   };
 
   useEffect(() => {
