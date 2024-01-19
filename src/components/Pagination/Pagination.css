@@ -6,6 +6,11 @@
   cursor: pointer;
 }
 
+.pagination-block-disabled {
+  background-color: rgba(117, 114, 114, 0.647);
+  cursor: not-allowed;
+}
+
 .pagination-container {
   margin-top: 20px;
 }

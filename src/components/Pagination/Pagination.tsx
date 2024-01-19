@@ -9,10 +9,12 @@ export default function Pagination({
 }: PaginationProps) {
   const renderPageBlock = (index: number, text?: string) => {
     const pages = Math.ceil(total / pageSize);
-    // const shouldBeDisabled = index <= 0 || index >= pages;
 
     return typeof index !== "number" || index < 1 || index > pages ? (
-      <span key={`page_${index}`} className="pagination-block">
+      <span
+        key={`page_${index}`}
+        className="pagination-block pagination-block-disabled"
+      >
         {text || index}
       </span>
     ) : (
