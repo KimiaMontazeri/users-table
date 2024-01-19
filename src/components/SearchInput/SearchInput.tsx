@@ -1,10 +1,7 @@
 import { ChangeEvent, useState } from "react";
+import type { SearchInputProps } from "./SearchInput.types";
 
-type SearchInput = {
-  handleOnKeyUp: (value?: string) => void;
-};
-
-export default function SearchInput({ handleOnKeyUp }: SearchInput) {
+export default function SearchInput({ handleOnKeyUp }: SearchInputProps) {
   const [value, setValue] = useState("");
 
   return (

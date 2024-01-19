@@ -1,11 +1,5 @@
-import { ChangeEvent } from "react";
-
-export type Order = "asc" | "desc";
-
-type SortSelectProps = {
-  handleChange: (selectedValue: Order) => void;
-  selectedOption?: Order;
-};
+import type { ChangeEvent } from "react";
+import type { Order, SortSelectProps } from "./SortSelect.types";
 
 export default function SortSelect({
   handleChange,

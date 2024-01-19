@@ -3,40 +3,21 @@ import records from "../../records.json";
 import { setURLSearchParam } from "../../utils/SearchParams";
 import { ORDER_URL_SEARCH_PARAM } from "../../constants/constants";
 import Pagination from "../Pagination";
-import User from "./User/User";
+import User from "./User";
 import SortSelect from "../SortSelect";
 import type { Order } from "../SortSelect";
 import SearchInput from "../SearchInput";
-
-/* Types */
-export type UserDataProps = (typeof records)[number];
-
-type UserDataKeys = keyof UserDataProps;
-
-type UsersTableProps = {
-  page?: number;
-  order?: Order;
-};
-
-type Filters = {
-  col: keyof UserDataProps;
-  value: string;
-}[];
-
-/* Constants */
-const KEYS: UserDataKeys[] = Object.keys(records[0]) as UserDataKeys[];
-const LENGTH = records.length;
-const FIRST_PAGE = 1;
-const PAGE_SIZE = 10;
-
-/* Util Functions */
-const shouldColHaveSearchInput = (col: keyof UserDataProps) => {
-  return col === "name" || col === "address" || col === "phone";
-};
-
-const shouldColHaveSelect = (col: keyof UserDataProps) => {
-  return col === "date";
-};
+import type {
+  Filters,
+  UserDataKeys,
+  UserDataProps,
+  UsersTableProps,
+} from "./UsersTable.types";
+import { FIRST_PAGE, KEYS, LENGTH, PAGE_SIZE } from "./UsersTable.constants";
+import {
+  shouldColHaveSearchInput,
+  shouldColHaveSelect,
+} from "./UsersTable.utils";
 
 export default function UsersTable({ page, order }: UsersTableProps) {
   const isValidPage = page && page > 0 && page < LENGTH / PAGE_SIZE;
@@ -83,7 +64,7 @@ export default function UsersTable({ page, order }: UsersTableProps) {
   };
 
   const handleAddFilter = (
-    col: keyof UserDataProps,
+    col: UserDataKeys,
     value: string | undefined
   ): Filters => {
     const tempFilters = filters;
@@ -127,7 +108,6 @@ export default function UsersTable({ page, order }: UsersTableProps) {
     <>
       <table>
         <thead>
-          {/* TABLE HEAD (can be extracted into a dummy component) */}
           <tr className="header-row">
             <th>INDEX</th> {/* Manually adding this column */}
             {KEYS.map((key, index) => {
