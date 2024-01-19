@@ -1,4 +1,5 @@
 import { UserDataProps } from "..";
+import "./User.css";
 
 export default function User({
   id,

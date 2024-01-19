@@ -1,0 +1,16 @@
+.row td {
+  padding: 10px;
+  border-top: 2px solid rgb(179, 177, 177);
+}
+
+td:nth-child(1) {
+    width: 5%;
+}
+
+td:nth-child(2) td:nth-child(3) td:nth-child(4) td:nth-child(6) {
+    width: 15%;
+}
+
+td:nth-child(5) {
+    width: 20%;
+}
