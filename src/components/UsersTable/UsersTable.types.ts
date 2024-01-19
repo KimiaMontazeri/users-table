@@ -13,7 +13,8 @@ export type UsersTableProps = {
   phone?: string;
 };
 
-export type Filters = {
-  col: keyof UserDataProps;
-  value: string;
-}[];
+export type Filter = {
+  key: keyof UserDataProps;
+  value?: string;
+};
+export type Filters = Filter[];

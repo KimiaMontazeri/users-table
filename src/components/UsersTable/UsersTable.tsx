@@ -8,8 +8,8 @@ import SortSelect from "../SortSelect";
 import type { Order } from "../SortSelect";
 import SearchInput from "../SearchInput";
 import type {
+  Filter,
   Filters,
-  UserDataKeys,
   UserDataProps,
   UsersTableProps,
 } from "./UsersTable.types";
@@ -67,19 +67,20 @@ export default function UsersTable({
     saveSortingOrderToURL(order);
   };
 
-  const handleAddFilters = (
-    newFilters: { col: UserDataKeys; value?: string }[]
-  ): Filters => {
+  const handleAddFilters = (newFilters: Filters): Filters => {
     const oldFilters = filters;
 
     newFilters.forEach((filter) => {
-      const foundIndex = oldFilters.findIndex((f) => f.col === filter.col);
+      const foundIndex = oldFilters.findIndex((f) => f.key === filter.key);
       if (foundIndex !== -1) {
         const foundFilter = filters[foundIndex];
         foundFilter.value = filter.value || "";
         oldFilters[foundIndex] = foundFilter; // update
       } else {
-        const newFilter = { col: filter.col, value: filter.value || "" };
+        const newFilter: Filter = {
+          key: filter.key,
+          value: filter.value || "",
+        };
         oldFilters.push(newFilter); // update
       }
     });
@@ -92,9 +93,9 @@ export default function UsersTable({
     setCurrentPage(FIRST_PAGE);
 
     let filtered: UserDataProps[] = records;
-    filters.forEach(({ col, value }) => {
+    filters.forEach(({ key, value }) => {
       filtered = filtered.filter((record) =>
-        record[col].toLowerCase().startsWith(value.toLowerCase())
+        record[key].toLowerCase().startsWith(value?.toLowerCase() || "")
       );
     });
 
@@ -116,9 +117,9 @@ export default function UsersTable({
     }
 
     const newFilters = handleAddFilters([
-      { col: "name", value: name },
-      { col: "address", value: address },
-      { col: "phone", value: phone },
+      { key: "name", value: name },
+      { key: "address", value: address },
+      { key: "phone", value: phone },
     ]);
     filterData(newFilters);
   }, []);
@@ -149,7 +150,7 @@ export default function UsersTable({
                       handleOnKeyUp={(value) => {
                         // const filters = handleAddFilter(key, value);
                         const filters = handleAddFilters([
-                          { col: key, value: value },
+                          { key: key, value: value },
                         ]);
                         filterData(filters);
                       }}
