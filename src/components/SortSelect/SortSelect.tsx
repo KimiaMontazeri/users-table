@@ -17,16 +17,16 @@ export default function SortSelect({
   };
 
   return (
-    <select onChange={onChange} className="sorting-select">
-      <option disabled selected={selectedOption === undefined}>
+    <select
+      onChange={onChange}
+      defaultValue={selectedOption || "default"}
+      className="sorting-select"
+    >
+      <option disabled value="default">
         Order...
       </option>
-      <option value="asc" selected={selectedOption === "asc"}>
-        Ascending
-      </option>
-      <option value="desc" selected={selectedOption === "desc"}>
-        Descending
-      </option>
+      <option value="asc">Ascending</option>
+      <option value="desc">Descending</option>
     </select>
   );
 }
