@@ -19,14 +19,19 @@ import {
   shouldColHaveSelect,
 } from "./UsersTable.utils";
 
-export default function UsersTable({ page, order }: UsersTableProps) {
+export default function UsersTable({
+  page,
+  order,
+  name = "",
+  address = "",
+  phone = "",
+}: UsersTableProps) {
   const isValidPage = page && page > 0 && page < LENGTH / PAGE_SIZE;
   const [currentPage, setCurrentPage] = useState(
     isValidPage ? page : FIRST_PAGE
   ); // 1-indexed
   const [data, setData] = useState(records);
   const [currentUsersData, setCurrentUsersData] = useState<UserDataProps[]>([]);
-  const [sortOrder, setSortOrder] = useState<Order | undefined>(order);
   const [filters, setFilters] = useState<Filters>([]);
 
   // const changePage = () => {} TODO: implement this (save page number in url)
@@ -59,7 +64,7 @@ export default function UsersTable({ page, order }: UsersTableProps) {
     setData(sorted);
     calculateCurrentUsersData();
 
-    setSortOrder(order);
+    // setSortOrder(order);
     saveSortingOrderToURL(order);
   };
 
@@ -104,6 +109,12 @@ export default function UsersTable({ page, order }: UsersTableProps) {
     calculateCurrentUsersData();
   }, [currentPage]);
 
+  useEffect(() => {
+    if (order) {
+      handleSelectSortingOrder(order);
+    }
+  }, []);
+
   return (
     <>
       <table>
@@ -117,7 +128,7 @@ export default function UsersTable({ page, order }: UsersTableProps) {
                     <span>{key.toUpperCase()}</span>
                     <SortSelect
                       handleChange={handleSelectSortingOrder}
-                      selectedOption={sortOrder}
+                      selectedOption={order}
                     />
                   </th>
                 );
