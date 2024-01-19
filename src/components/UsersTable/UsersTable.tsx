@@ -195,7 +195,7 @@ export default function UsersTable({
       <Pagination
         current={currentPage}
         pageSize={PAGE_SIZE}
-        total={LENGTH}
+        total={data.length}
         onClick={(index: number) => changePage(index)}
       />
     </>
