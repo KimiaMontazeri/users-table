@@ -21,9 +21,7 @@ export const saveSortingOrderToURL = (order: Order) => {
 
 export const saveFiltersToURL = (filters: Filters) => {
   filters.forEach(({ key, value }) => {
-    if (value) {
-      setURLSearchParam(key, value);
-    }
+    setURLSearchParam(key, value || "");
   });
 };
 
