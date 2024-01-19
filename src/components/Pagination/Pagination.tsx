@@ -1,4 +1,5 @@
 import type { PaginationProps } from "./Pagination.types";
+import "./Pagination.css";
 
 export default function Pagination({
   current,

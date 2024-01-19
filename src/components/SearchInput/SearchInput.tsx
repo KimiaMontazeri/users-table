@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import type { SearchInputProps } from "./SearchInput.types";
+import "./SearchInput.css";
 
 export default function SearchInput({
   defaultValue = "",

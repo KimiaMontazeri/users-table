@@ -1,5 +1,6 @@
 import type { ChangeEvent } from "react";
 import type { Order, SortSelectProps } from "./SortSelect.types";
+import "./SortSelect.css";
 
 export default function SortSelect({
   handleChange,

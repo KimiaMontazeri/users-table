@@ -5,6 +5,7 @@ import User from "./User";
 import SortSelect from "../SortSelect";
 import type { Order } from "../SortSelect";
 import SearchInput from "../SearchInput";
+import Stack from "../Stack";
 import type {
   Filter,
   Filters,
@@ -20,7 +21,7 @@ import {
   shouldColHaveSearchInput,
   shouldColHaveSelect,
 } from "./UsersTable.utils";
-import Stack from "../Stack";
+import "./UsersTable.css";
 
 export default function UsersTable({
   page,
@@ -141,7 +142,7 @@ export default function UsersTable({
 
   return (
     <>
-      <table>
+      <table className="table">
         <thead>
           <tr className="header-row">
             <th>INDEX</th> {/* Manually adding this column */}
