@@ -20,6 +20,7 @@ import {
   shouldColHaveSearchInput,
   shouldColHaveSelect,
 } from "./UsersTable.utils";
+import Stack from "../Stack";
 
 export default function UsersTable({
   page,
@@ -148,27 +149,31 @@ export default function UsersTable({
               if (shouldColHaveSelect(key)) {
                 return (
                   <th key={index}>
-                    <span>{key.toUpperCase()}</span>
-                    <SortSelect
-                      handleChange={handleSelectSortingOrder}
-                      selectedOption={order}
-                    />
+                    <Stack>
+                      <span>{key.toUpperCase()}</span>
+                      <SortSelect
+                        handleChange={handleSelectSortingOrder}
+                        selectedOption={order}
+                      />
+                    </Stack>
                   </th>
                 );
               }
               if (shouldColHaveSearchInput(key)) {
                 return (
                   <th key={index}>
-                    <span>{key.toUpperCase()}</span>
-                    <SearchInput
-                      defaultValue={getDefaultSearchValue(key)}
-                      handleOnKeyUp={(value) => {
-                        const filters = handleAddFilters([
-                          { key: key, value: value },
-                        ]);
-                        filterData(filters);
-                      }}
-                    />
+                    <Stack>
+                      <span>{key.toUpperCase()}</span>
+                      <SearchInput
+                        defaultValue={getDefaultSearchValue(key)}
+                        handleOnKeyUp={(value) => {
+                          const filters = handleAddFilters([
+                            { key: key, value: value },
+                          ]);
+                          filterData(filters);
+                        }}
+                      />
+                    </Stack>
                   </th>
                 );
               }
