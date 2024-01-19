@@ -1,5 +1,8 @@
 import { setURLSearchParam } from "../../utils/SearchParams";
-import { ORDER_URL_SEARCH_PARAM } from "../../constants/constants";
+import {
+  ORDER_URL_SEARCH_PARAM,
+  PAGE_URL_SEARCH_PARAM,
+} from "../../constants/constants";
 import type { UserDataProps } from ".";
 import type { Order } from "../SortSelect";
 import type { Filters } from "./UsersTable.types";
@@ -22,4 +25,8 @@ export const saveFiltersToURL = (filters: Filters) => {
       setURLSearchParam(key, value);
     }
   });
+};
+
+export const savePageNumberToURL = (page: number) => {
+  setURLSearchParam(PAGE_URL_SEARCH_PARAM, String(page));
 };

@@ -14,6 +14,7 @@ import type {
 import { FIRST_PAGE, KEYS, LENGTH, PAGE_SIZE } from "./UsersTable.constants";
 import {
   saveFiltersToURL,
+  savePageNumberToURL,
   saveSortingOrderToURL,
   shouldColHaveSearchInput,
   shouldColHaveSelect,
@@ -34,7 +35,10 @@ export default function UsersTable({
   const [currentUsersData, setCurrentUsersData] = useState<UserDataProps[]>([]);
   const [filters, setFilters] = useState<Filters>([]);
 
-  // const changePage = () => {} TODO: implement this (save page number in url)
+  const changePage = (page: number) => {
+    setCurrentPage(page);
+    savePageNumberToURL(page);
+  };
 
   const getStartAndEnd = () => {
     const start = (currentPage - 1) * PAGE_SIZE;
@@ -86,7 +90,7 @@ export default function UsersTable({
   };
 
   const filterData = (filters: Filters) => {
-    setCurrentPage(FIRST_PAGE);
+    changePage(FIRST_PAGE);
 
     let filtered: UserDataProps[] = records;
     filters.forEach(({ key, value }) => {
@@ -172,7 +176,7 @@ export default function UsersTable({
         current={currentPage}
         pageSize={PAGE_SIZE}
         total={LENGTH}
-        onClick={(index: number) => setCurrentPage(index)}
+        onClick={(index: number) => changePage(index)}
       />
     </>
   );
