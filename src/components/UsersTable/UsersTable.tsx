@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import records from "../../records.json";
-import { setURLSearchParam } from "../../utils/SearchParams";
-import { ORDER_URL_SEARCH_PARAM } from "../../constants/constants";
 import Pagination from "../Pagination";
 import User from "./User";
 import SortSelect from "../SortSelect";
@@ -15,6 +13,8 @@ import type {
 } from "./UsersTable.types";
 import { FIRST_PAGE, KEYS, LENGTH, PAGE_SIZE } from "./UsersTable.constants";
 import {
+  saveFiltersToURL,
+  saveSortingOrderToURL,
   shouldColHaveSearchInput,
   shouldColHaveSelect,
 } from "./UsersTable.utils";
@@ -45,18 +45,6 @@ export default function UsersTable({
   const calculateCurrentUsersData = () => {
     const { start, end } = getStartAndEnd();
     setCurrentUsersData(data.slice(start, end));
-  };
-
-  const saveSortingOrderToURL = (order: Order) => {
-    setURLSearchParam(ORDER_URL_SEARCH_PARAM, order);
-  };
-
-  const saveFiltersToURL = (filters: Filters) => {
-    filters.forEach(({ key, value }) => {
-      if (value) {
-        setURLSearchParam(key, value);
-      }
-    });
   };
 
   const handleSelectSortingOrder = (order: Order) => {
