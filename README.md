@@ -1,30 +1,20 @@
-# React + TypeScript + Vite
+# Table of Users
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repo is a simple React application that renders a table showing a list of users with the below columns:
+- User ID
+- Name
+- Date of Registration
+- Address
+- Phone Number
 
-Currently, two official plugins are available:
+The table has **pagination**, **sorting**, and **filtering** functionalities. It can be sorted by the date in ascending or descending order. 
+You can filter the shown data by the name, address, or phone number.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**The current page and all the filtering and sorting are stored in the URL search parameters.**
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+## Run Locally
+```
+npm i
+npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
