@@ -8,6 +8,7 @@ import SearchInput from "../SearchInput";
 import type {
   Filter,
   Filters,
+  UserDataKeys,
   UserDataProps,
   UsersTableProps,
 } from "./UsersTable.types";
@@ -34,6 +35,19 @@ export default function UsersTable({
   const [data, setData] = useState(records);
   const [currentUsersData, setCurrentUsersData] = useState<UserDataProps[]>([]);
   const [filters, setFilters] = useState<Filters>([]);
+
+  const getDefaultSearchValue = (key: UserDataKeys) => {
+    switch (key) {
+      case "name":
+        return name;
+      case "address":
+        return address;
+      case "phone":
+        return phone;
+      default:
+        return "";
+    }
+  };
 
   const changePage = (page: number) => {
     setCurrentPage(page);
@@ -147,8 +161,8 @@ export default function UsersTable({
                   <th key={index}>
                     <span>{key.toUpperCase()}</span>
                     <SearchInput
+                      defaultValue={getDefaultSearchValue(key)}
                       handleOnKeyUp={(value) => {
-                        // const filters = handleAddFilter(key, value);
                         const filters = handleAddFilters([
                           { key: key, value: value },
                         ]);
