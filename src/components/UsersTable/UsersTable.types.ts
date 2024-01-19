@@ -8,6 +8,9 @@ export type UserDataKeys = keyof UserDataProps;
 export type UsersTableProps = {
   page?: number;
   order?: Order;
+  name?: string;
+  address?: string;
+  phone?: string;
 };
 
 export type Filters = {

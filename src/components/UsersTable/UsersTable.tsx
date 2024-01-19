@@ -64,28 +64,28 @@ export default function UsersTable({
     setData(sorted);
     calculateCurrentUsersData();
 
-    // setSortOrder(order);
     saveSortingOrderToURL(order);
   };
 
-  const handleAddFilter = (
-    col: UserDataKeys,
-    value: string | undefined
+  const handleAddFilters = (
+    newFilters: { col: UserDataKeys; value?: string }[]
   ): Filters => {
-    const tempFilters = filters;
-    const foundIndex = tempFilters.findIndex((filter) => filter.col === col);
-    if (foundIndex !== -1) {
-      const foundFilter = filters[foundIndex];
-      foundFilter.value = value || "";
+    const oldFilters = filters;
 
-      tempFilters[foundIndex] = foundFilter;
-      setFilters(tempFilters);
-      return tempFilters;
-    }
+    newFilters.forEach((filter) => {
+      const foundIndex = oldFilters.findIndex((f) => f.col === filter.col);
+      if (foundIndex !== -1) {
+        const foundFilter = filters[foundIndex];
+        foundFilter.value = filter.value || "";
+        oldFilters[foundIndex] = foundFilter; // update
+      } else {
+        const newFilter = { col: filter.col, value: filter.value || "" };
+        oldFilters.push(newFilter); // update
+      }
+    });
 
-    const newFilter = { col: col, value: value || "" };
-    setFilters([newFilter, ...tempFilters]);
-    return [newFilter, ...tempFilters];
+    setFilters(oldFilters);
+    return oldFilters;
   };
 
   const filterData = (filters: Filters) => {
@@ -109,10 +109,18 @@ export default function UsersTable({
     calculateCurrentUsersData();
   }, [currentPage]);
 
+  /* Syncs the rendered data with URL search params */
   useEffect(() => {
     if (order) {
       handleSelectSortingOrder(order);
     }
+
+    const newFilters = handleAddFilters([
+      { col: "name", value: name },
+      { col: "address", value: address },
+      { col: "phone", value: phone },
+    ]);
+    filterData(newFilters);
   }, []);
 
   return (
@@ -139,7 +147,10 @@ export default function UsersTable({
                     <span>{key.toUpperCase()}</span>
                     <SearchInput
                       handleOnKeyUp={(value) => {
-                        const filters = handleAddFilter(key, value);
+                        // const filters = handleAddFilter(key, value);
+                        const filters = handleAddFilters([
+                          { col: key, value: value },
+                        ]);
                         filterData(filters);
                       }}
                     />
